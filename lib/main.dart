@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/main_tab/main_tab_screen.dart';
+import 'routes/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,8 +10,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainTabScreen(),
+    return MaterialApp.router(
+      routerConfig: router,
     );
   }
 }

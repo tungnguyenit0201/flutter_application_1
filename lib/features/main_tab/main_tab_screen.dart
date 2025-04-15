@@ -1,45 +1,38 @@
 import 'package:flutter/material.dart';
-import '../../features/home/home_screen.dart';
-import '../../features/profile/profile_screen.dart';
+import 'package:go_router/go_router.dart';
 
-class MainTabScreen extends StatefulWidget {
-  const MainTabScreen({super.key});
+class MainTabScreen extends StatelessWidget {
+  final Widget child;
 
-  @override
-  State<MainTabScreen> createState() => _MainTabScreenState();
-}
+  const MainTabScreen({super.key, required this.child});
 
-class _MainTabScreenState extends State<MainTabScreen> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const ProfileScreen(),
+  static const tabs = [
+    {'icon': Icons.home, 'label': 'Home', 'location': '/home'},
+    {'icon': Icons.person, 'label': 'Profile', 'location': '/profile'},
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  int _locationToTabIndex(String location) {
+    return tabs.indexWhere((tab) => location.startsWith(tab['location'] as String));
   }
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.toString();
+    final selectedIndex = _locationToTabIndex(location);
+
     return Scaffold(
-      body: _screens[_selectedIndex],
+      body: child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        currentIndex: selectedIndex,
+        onTap: (index) {
+          context.go(tabs[index]['location'] as String);
+        },
+        items: tabs
+            .map((tab) => BottomNavigationBarItem(
+                  icon: Icon(tab['icon'] as IconData),
+                  label: tab['label'] as String,
+                ))
+            .toList(),
       ),
     );
   }
