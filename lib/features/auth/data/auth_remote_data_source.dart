@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/features/auth/data/models/auth_modal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/network/api_client.dart';
 
 class AuthRemoteDataSource {
@@ -11,12 +12,11 @@ class AuthRemoteDataSource {
         '/marketplace/customer/v1/sign-in',
         data: {'type': 'CUSTOMER', 'username': email, 'password': password},
       );
-      print(res.data);
-    //   return AuthModal(
-    //   bearerToken: 'bearerToken',
-    //   username: 'username',
-    // );
-      return AuthModal.fromJson(res.data.cast<String, dynamic>());
+      print(res.data['data'][0]['bearerToken']); 
+   
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('bearerToken', res.data['data'][0]['bearerToken']);
+      return AuthModal.fromJson(res.data['data'][0]);
     } on DioException catch (e) {
       print(e.response?.data);
       throw Exception(e.response?.data['message'] ?? 'Login failed');
