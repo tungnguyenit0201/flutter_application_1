@@ -41,6 +41,9 @@ dependencies:
   shared_preferences: ^2.5.3
   local_auth: ^2.3.0
   lottie: ^3.3.1
+  flutter_secure_storage: ^9.2.4
+  flutter_bloc: ^8.1.4
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:

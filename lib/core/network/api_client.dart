@@ -1,11 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 
 class ApiClient {
   final Dio dio;
-
   ApiClient()
     : dio = Dio(
         BaseOptions(
@@ -23,34 +19,9 @@ class ApiClient {
           },
         ),
       );
+
+  Future<void> initializeHeaders(String token) async {
+    dio.options.headers['Authorization'] = 'Bearer $token';
+  }
 }
-// The ApiClient class is responsible for making network requests to the API.
-// It uses the Dio package to handle HTTP requests and responses.
-// The constructor initializes the Dio instance with a base URL and default options.
-// You can customize the base URL and other options as needed.
-// The ApiClient class can be used in your services or repositories to make API calls.
-// You can add methods to the ApiClient class for specific API endpoints, such as:
-// - getUser
-// - createUser
-// - updateUser
-// - deleteUser
-// Each method can use the Dio instance to make GET, POST, PUT, or DELETE requests.
-// You can also handle errors and responses in these methods.
-// For example, you can create a method to fetch user data:
-//
-// Future<User> getUser(int userId) async {
-//   try {
-//     final response = await dio.get('/users/$userId');
-    // Handle the response and return the user data
-//     return User.fromJson(response.data);
-//   } on DioError catch (e) {
-//     // Handle errors, such as network issues or API errors
-//     throw Exception('Failed to load user: ${e.message}');
-//   }
-//   }
-// This method fetches user data from the API and handles errors.
-// You can create similar methods for other API endpoints.
-// The ApiClient class can be injected into your services or repositories using dependency injection.
-// This allows you to easily swap out the implementation if needed, such as for testing or using a different API.
-// You can also create a separate file for the ApiClient class, such as api_client.dart, and import it where needed.
-// This keeps your code organized and maintainable.
+final Dio dioInstance = ApiClient().dio;

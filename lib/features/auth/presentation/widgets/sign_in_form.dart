@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/data/auth_remote_data_source.dart';
 import 'package:flutter_application_1/features/auth/data/auth_repository_impl.dart';
 import 'package:flutter_application_1/features/auth/presentation/widgets/logo_animated.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:lottie/lottie.dart';
@@ -25,6 +26,11 @@ class _SignInFormState extends State<SignInForm> {
 
     try {
       final user = await repo.signIn(email, password);
+      final storage = FlutterSecureStorage();
+      await storage.write(key: 'email', value: email);
+      await storage.write(key: 'password', value: password);
+      final profile = await repo.getProfile();
+      print('profile: $profile');
 
       context.go('/home');
     } catch (e) {
@@ -38,9 +44,24 @@ class _SignInFormState extends State<SignInForm> {
   void _handleBiometrics() async {
     final LocalAuthentication auth = LocalAuthentication();
    final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+   print('canAuthenticateWithBiometrics: $canAuthenticateWithBiometrics');
     final bool canAuthenticate =
         canAuthenticateWithBiometrics || await auth.isDeviceSupported();
-
+    print('canAuthenticate: $canAuthenticate');
+    if (canAuthenticate) {
+      final result = await auth.authenticate(
+        localizedReason: 'Authenticate to sign in',
+      );
+      print('result: $result');
+      if (result) {
+        final storage = FlutterSecureStorage();
+        final email = await storage.read(key: 'email');
+        final password = await storage.read(key: 'password');
+        _emailController.text = email ?? '';
+        _passwordController.text = password ?? '';
+        _handleSignIn();
+      }
+    }
   }
 
   @override
@@ -166,12 +187,14 @@ class _SignInFormState extends State<SignInForm> {
           ),
         ),
         const SizedBox(height: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          onPressed: ,
-          children: [
-            Lottie.asset('assets/jsons/biometrics.json', width: 40, height: 40),
-          ],
+        GestureDetector(
+          onTap: _handleBiometrics,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset('assets/jsons/biometrics.json', width: 40, height: 40),
+            ],
+          ),
         )
       ],
     );

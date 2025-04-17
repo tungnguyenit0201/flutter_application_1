@@ -1,0 +1,159 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+{
+  "files": {
+    "exclude": {
+      "**/.git": true,
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true
+    }
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "bracketSameLine": true,
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120
+  },
+  "search": {
+    "exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true
+    }
+  },
+  "rules": {
+    "typescript": {
+      "prefer-const": true,
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+      "explicit-function-return-type": ["warn", { "allowExpressions": true }]
+    },
+    "javascript": {
+      "semi": ["error", "always"],
+      "quotes": ["error", "double"],
+      "eqeqeq": "warn"
+    },
+    "react": {
+      "jsx-quotes": ["error", "prefer-double"],
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    },
+    "react-native": {
+      "no-inline-styles": "warn",
+      "no-unused-styles": "error",
+      "split-platform-components": "warn"
+    },
+    "best-practices": {
+      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "no-debugger": "error"
+    },
+    "formatting": {
+      "indent": ["error", 2],
+      "trailing-comma": ["error", "always-multiline"],
+      "object-curly-spacing": ["error", "always"]
+    }
+  },
+  "additionalInstructions": "`\n# Development Guidelines\n\n## TypeScript & General\n- Use TypeScript for type safety\n- Define proper interfaces and types\n- Enable strict type checking\n\n## Styling\n- Use StyleSheet.create for all styles\n- Follow platform-specific design guidelines\n- Implement responsive layouts\n\n## Offline Support\n- Implement proper data caching\n- Handle offline/online state gracefully\n- Sync data when connection is restored\n\n## Performance\n- Use FlatList for long lists\n- Implement proper memoization\n- Optimize images and assets\n- Follow React Native best practices\n\n# React Best Practices\n\n## Component Structure\n- Use functional components over class components\n- Keep components small and focused\n- Extract reusable logic into custom hooks\n- Use composition over inheritance\n- Implement proper prop types with TypeScript\n- Split large components into smaller, focused ones\n\n## Hooks\n- Follow the Rules of Hooks\n- Use custom hooks for reusable logic\n- Keep hooks focused and simple\n- Use appropriate dependency arrays in useEffect\n- Implement cleanup in useEffect when needed\n- Avoid nested hooks\n\n## State Management\n- Use useState for local component state\n- Implement useShallow for complex state logic\n- Use Zutand for shared state\n- Keep state as close to where it's used as possible\n- Avoid prop drilling through proper state management\n- Use state management libraries only when necessary\n\n## Performance\n- Implement proper memoization (useMemo, useCallback)\n- Use React.memo for expensive components\n- Avoid unnecessary re-renders\n- Implement proper lazy loading\n- Use proper key props in lists\n- Profile and optimize render performance\n\n## Forms\n- Use controlled components for form inputs\n- Implement proper form validation\n- Handle form submission states properly\n- Show appropriate loading and error states\n- Use form libraries for complex forms\n- Implement proper accessibility for forms\n\n## Error Handling\n- Implement Error Boundaries\n- Handle async errors properly\n- Show user-friendly error messages\n- Implement proper fallback UI\n- Log errors appropriately\n- Handle edge cases gracefully\n\n## Testing\n- Write unit tests for components\n- Implement integration tests for complex flows\n- Use React Testing Library\n- Test user interactions\n- Test error scenarios\n- Implement proper mock data\n\n## Accessibility\n- Ensure keyboard navigation\n- Test with screen readers\n- Handle focus management\n- Provide proper alt text for images\n\n## Code Organization\n- Group related components together\n- Use proper file naming conventions\n- Implement proper directory structure\n- Keep styles close to components\n- Use proper imports/exports\n- Document complex component logic\n`",
+  "folderStructure": {
+    "root": {
+      "app": {
+        "abilities": "Ability-based access control",
+        "assets": "Images, fonts, and static resources",
+        "caches": "Caching mechanisms and storage",
+        "components": "Reusable UI components",
+        "configs": "Application configuration files",
+        "constants": "Constant values and enums",
+        "controls": "UI control components",
+        "databases": "Database related files and schemas",
+        "globals": "Global variables and settings",
+        "handlers": "Event and action handlers",
+        "helpers": "Helper functions and utilities",
+        "hooks": "Custom React hooks",
+        "interfaces": "TypeScript interfaces and types",
+        "modules": "Feature modules and business logic",
+        "screens": "App screens and views",
+        "services": "API and external service integrations",
+        "stores": "State management stores",
+        "types": "TypeScript type definitions",
+        "utils": "Utility functions and helpers",
+        "zutandStore": "Zustand state management"
+      },
+      "android": "Android platform specific files",
+      "ios": "iOS platform specific files",
+      "patches": "Patch files for dependencies",
+      "scripts": "Build and utility scripts",
+      "env": "Environment configuration files",
+      "__tests__": "Test files and test utilities",
+      "_bundle": "Bundle output directory",
+      ".vscode": "VS Code editor settings",
+      "App.tsx": "Main application component",
+      "index.js": "Application entry point",
+      "Router.js": "Navigation router configuration"
+    }
+  },
+  "reactNativeBestPractices": {
+    "componentArchitecture": {
+      "structure": "Use atomic design principles with React Native components (View, Text, TouchableOpacity)",
+      "reusability": "Create reusable components with TypeScript props and React Native's StyleProp",
+      "composition": "Build screens from reusable React Native components following platform guidelines",
+      "platformSpecific": "Use Platform.select and platform-specific file extensions (.ios.tsx, .android.tsx)"
+    },
+    "performance": {
+      "rendering": "Use PureComponent or React.memo for expensive renders",
+      "listOptimization": "Use FlatList with getItemLayout and windowSize props for optimized list rendering",
+      "imageOptimization": "Use FastImage for caching, implement progressive loading, and proper image sizing",
+      "animation": "Use Animated API with useNativeDriver: true for better performance",
+      "memory": "Implement proper cleanup in useEffect"
+    },
+    "dataManagement": {
+      "caching": "Use MMKV for fast data caching and implement proper cache invalidation strategies",
+      "offline": "Implement offline-first architecture with MMKV storage and handle network state with NetInfo",
+      "sync": "Use background sync with WorkManager/BackgroundTask and Zustand for state synchronization",
+      "storage": "Use MMKV for performance-critical and structured data, AsyncStorage for simple data, and SecureStore for sensitive info"
+    },
+    "security": {
+      "authentication": "Use SecureStore for tokens, implement biometric authentication when available, and follow OAuth2/JWT best practices",
+      "dataProtection": "Use the Keychain on iOS and EncryptedSharedPreferences on Android for sensitive data encryption",
+      "network": "Implement SSL pinning, use HTTPS exclusively, and validate server certificates",
+      "storage": "Use Keychain/EncryptedSharedPreferences for credentials, avoid AsyncStorage for sensitive data",
+      "general": "Implement app-level encryption, use secure random for cryptographic operations, and handle deep linking securely",
+      "bestPractices": "Enable app security features like SSL pinning and root detection, keep dependencies updated, and follow platform security guidelines"
+    },
+    "testing": {
+      "unit": "Write unit tests for components and utilities",
+      "integration": "Implement integration tests for complex flows",
+      "e2e": "Use Detox for end-to-end testing",
+      "snapshot": "Use snapshot testing for UI components"
+    },
+    "deployment": {
+      "versioning": "Use semantic versioning in build.gradle and Info.plist, implement version checks for app updates",
+      "ci": "Configure CI/CD with Fastlane for automated builds, testing, and deployment to app stores",
+      "cd": "Set up automated deployment with react-native-ota-update for JS bundle updates and app store releases",
+      "monitoring": "Integrate Firebase Crashlytics and Analytics for crash reporting and performance monitoring"
+    },
+    "accessibility": {
+      "semantics": "Use AccessibilityInfo and accessibilityLabel props for semantic components in React Native",
+      "screenReaders": "Implement accessibilityRole, accessibilityHint, and accessibilityState for VoiceOver/TalkBack support",
+      "keyboard": "Use accessible={true} and accessibilityActions for tab navigation and custom actions"
+    },
+    "internationalization": {
+      "localization": "Allow users to manually select their preferred language instead of auto-detecting from device settings",
+      "rtl": "Use I18nManager.forceRTL() and style properties like start/end instead of left/right based on user's language choice",
+      "formatting": "Format numbers and dates according to the user-selected locale preferences",
+      "translations": "Maintain JSON translation files for each supported language with nested keys and default to English as fallback"
+    },
+    "stateManagement": {
+      "localState": "Use Zustand stores with shallow selectors for component-level state management",
+      "complexState": "Implement useShallow for complex state logic with Zustand stores",
+      "sharedState": "Use Zustand stores with MMKV persistence for global state management across the app",
+      "stateLocation": "Keep state in Zustand stores organized by feature or domain, with clear actions and selectors",
+      "propDrilling": "Leverage Zustand's hooks to access state directly in components without prop drilling",
+      "libraries": "Standardize on Zustand as the primary state management solution for both local and global state needs"
+    }
+  }
+} 
